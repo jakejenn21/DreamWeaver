@@ -7,7 +7,10 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
-import './AppLayout.css';
+import "./AppLayout.css";
+import CreateDream from "../CreateDream/CreateDream";
+import ManageDreams from "../ManageDreams/ManageDreams";
+import WeaveDreams from "../WeaveDreams/WeaveDreams";
 
 const { Sider } = Layout;
 
@@ -35,6 +38,7 @@ const items: MenuItem[] = [
 
 const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState('1');
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -44,16 +48,20 @@ const AppLayout: React.FC = () => {
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="AppLayout_logo">
-            <CloudFilled className="AppLayout_logo-icon"/>
-            {!collapsed && <> Dream Weaver </>}
-            </div>
+          <CloudFilled className="AppLayout_logo-icon" />
+          {!collapsed && <> Dream Weaver </>}
+        </div>
         <Menu
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
+          onSelect={(info) => setSelectedMenuItem(info.key)}
         />
       </Sider>
+      {selectedMenuItem === "1" && <CreateDream/>}
+      {selectedMenuItem === "2" && <ManageDreams/>}
+      {selectedMenuItem === "3" && <WeaveDreams/>}
     </Layout>
   );
 };
