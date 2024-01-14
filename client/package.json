@@ -1,7 +1,12 @@
 {
-  "name": "app",
+  "name": "client",
   "version": "0.1.0",
-  "proxy": "http://localhost:4700",
+  "proxy": {
+    "/api" : {
+      "target": "http://localhost:4700",
+      "secure": false
+    }
+  },
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
