@@ -21,6 +21,7 @@
     "content-type": "^1.0.5",
     "cookie": "^0.5.0",
     "cookie-signature": "^1.0.6",
+    "cors": "^2.8.5",
     "debug": "^2.6.9",
     "define-data-property": "^1.1.1",
     "depd": "^2.0.0",
@@ -64,7 +65,6 @@
     "mongoose": "^8.0.4",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
-    "nodemon": "^3.0.2",
     "nopt": "^1.0.10",
     "normalize-path": "^3.0.0",
     "object-inspect": "^1.13.1",
@@ -99,13 +99,15 @@
     "vary": "^1.1.2",
     "yallist": "^4.0.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "dev": "nodemon server"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
 }

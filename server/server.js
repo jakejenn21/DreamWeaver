@@ -1,12 +1,14 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 const MongoDBClient = require('./db/db-init');
-const { ObjectId } = require('mongodb')
+const { ObjectId } = require('mongodb');
 
 const uri = "mongodb+srv://jakejenn21:dInx6hs3aMdP8zp5@dreamweavercluster.6pbawnn.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoDBClient(uri);
 
+app.use(cors());
 app.use(express.json());
 
 // ROUTES

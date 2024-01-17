@@ -1,53 +1,54 @@
 import React, { useState, useEffect } from "react";
 import "./ManageDreams.css";
-import { Button } from "antd";
-
-interface Dream {
-  _id: string,
-  title: string;
-  description: string;
-}
+import Dream, { IDream } from "./Dream/Dream";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { Button, Spin } from "antd";
+import DreamModal from "./DreamModal/DreamModal";
 
 const ManageDreams: React.FC = () => {
-  const [backendData, setBackendData] = useState<Dream[]>();
+  const [backendData, setBackendData] = useState<IDream[]>();
+  const [dream, setDream] = useState<IDream>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/api/dream')
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data.dreams);
-      });
+    fetchDreams();
   }, []);
 
-  const removeDream = async (id: string) => {
-    console.log(id);
-    await fetch(`/api/dream/${id}`, {
-      method: 'DELETE',
-    });
-
-    fetch('/api/dream')
+  const fetchDreams = () => {
+    fetch("/api/dream")
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setBackendData(data.dreams);
       });
-  }
+  };
 
   return (
     <>
-      {!backendData && <div>Loading...</div>}
-      {backendData && (
-        <div className="ManageDreams_container">
-          {backendData.map(({ _id, title, description }) => {
-            return (
-              <div>
-                <Button onClick={() => removeDream(_id)}>Delete</Button>
-                <h2>{title}</h2>
-                <p>{description}</p>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <DreamModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} dream={null} fetchDreams={fetchDreams} />
+      {!backendData ? 
+      (<div className="ManageDreams_spinner"><Spin size="large"/></div>) :
+      (<div className="ManageDreams_container">
+          <div className="ManageDreams_container-add-button">
+            <Button onClick={() => setIsModalOpen(true)} type="primary">
+              <PlusCircleOutlined />
+            </Button>
+          </div>
+          <div className="ManageDreams_container-dream-cards">
+            {backendData.map(({ _id, date, summary }) => {
+              return (
+                <Dream
+                  _id={_id}
+                  date={date}
+                  summary={summary}
+                  fetchDreams={fetchDreams}
+                  setDream={setDream}
+                  setIsModalOpen={setIsModalOpen}
+                />
+              );
+            })}
+          </div>
+        </div>)}
     </>
   );
 };

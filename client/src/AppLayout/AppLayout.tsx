@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  PlusCircleOutlined,
   EditOutlined,
   BranchesOutlined,
   CloudFilled,
@@ -8,7 +7,6 @@ import {
 import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import "./AppLayout.css";
-import CreateDream from "../CreateDream/CreateDream";
 import ManageDreams from "../ManageDreams/ManageDreams";
 import WeaveDreams from "../WeaveDreams/WeaveDreams";
 
@@ -31,9 +29,8 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Create Dream", "1", <PlusCircleOutlined />),
-  getItem("Manage Dreams", "2", <EditOutlined />),
-  getItem("Weave Dreams", "3", <BranchesOutlined />),
+  getItem("Manage Dreams", "1", <EditOutlined />),
+  getItem("Weave Dreams", "2", <BranchesOutlined />),
 ];
 
 const AppLayout: React.FC = () => {
@@ -41,7 +38,7 @@ const AppLayout: React.FC = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState('1');
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: '100vh', width: '100%' }}>
       <Sider
         collapsible
         collapsed={collapsed}
@@ -59,9 +56,8 @@ const AppLayout: React.FC = () => {
           onSelect={(info) => setSelectedMenuItem(info.key)}
         />
       </Sider>
-      {selectedMenuItem === "1" && <CreateDream/>}
-      {selectedMenuItem === "2" && <ManageDreams/>}
-      {selectedMenuItem === "3" && <WeaveDreams/>}
+      {selectedMenuItem === "1" && <ManageDreams/>}
+      {selectedMenuItem === "2" && <WeaveDreams/>}
     </Layout>
   );
 };
