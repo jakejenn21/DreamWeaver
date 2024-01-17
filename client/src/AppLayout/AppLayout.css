@@ -2,6 +2,8 @@
     font-size: large;
     color: white;
     margin: 12px;
+    display: flex;
+    justify-content: center;
 }
 
 .AppLayout_logo-icon {

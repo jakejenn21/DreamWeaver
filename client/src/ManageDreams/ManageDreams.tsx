@@ -7,7 +7,7 @@ import DreamModal from "./DreamModal/DreamModal";
 
 const ManageDreams: React.FC = () => {
   const [backendData, setBackendData] = useState<IDream[]>();
-  const [dream, setDream] = useState<IDream>();
+  const [selectedDream, setSelectedDream] = useState<IDream>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -25,24 +25,23 @@ const ManageDreams: React.FC = () => {
 
   return (
     <>
-      <DreamModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} dream={null} fetchDreams={fetchDreams} />
+      <DreamModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} dream={selectedDream} fetchDreams={fetchDreams} />
       {!backendData ? 
       (<div className="ManageDreams_spinner"><Spin size="large"/></div>) :
       (<div className="ManageDreams_container">
           <div className="ManageDreams_container-add-button">
-            <Button onClick={() => setIsModalOpen(true)} type="primary">
+            <Button onClick={() => setIsModalOpen(true)} type="primary" size="large">
+              Create Dream
               <PlusCircleOutlined />
             </Button>
           </div>
           <div className="ManageDreams_container-dream-cards">
-            {backendData.map(({ _id, date, summary }) => {
+            {backendData.map((dream) => {
               return (
                 <Dream
-                  _id={_id}
-                  date={date}
-                  summary={summary}
+                  dream={dream}
+                  setSelectedDream={setSelectedDream}
                   fetchDreams={fetchDreams}
-                  setDream={setDream}
                   setIsModalOpen={setIsModalOpen}
                 />
               );

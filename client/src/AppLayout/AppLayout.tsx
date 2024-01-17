@@ -38,7 +38,7 @@ const AppLayout: React.FC = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState('1');
 
   return (
-    <Layout style={{ minHeight: '100vh', width: '100%' }}>
+    <Layout style={{ minHeight: '100vh', position: 'relative'}}>
       <Sider
         collapsible
         collapsed={collapsed}

@@ -5,24 +5,19 @@ import { Card } from "antd";
 const { Meta } = Card;
 
 export interface IDream {
-  _id: string;
-  date: string;
-  summary: string;
+  dream: any;
+  setSelectedDream?: any;
   fetchDreams?: any;
-  setDream?: any;
   setIsModalOpen?: any;
 }
 
 const Dream: React.FC<IDream> = ({
-  _id,
-  date,
-  summary,
+  dream,
+  setSelectedDream,
   fetchDreams,
-  setDream,
   setIsModalOpen,
 }) => {
   const removeDream = async (id: string) => {
-    console.log(id);
     await fetch(`/api/dream/${id}`, {
       method: "DELETE",
     });
@@ -30,21 +25,23 @@ const Dream: React.FC<IDream> = ({
   };
 
   const handleEdit = () => {
+    console.log('handle edit', dream);
     setIsModalOpen(true);
+    setSelectedDream(dream);
   };
 
   return (
     <div className="Dream_card">
       <Card
-        key={_id}
+        key={dream._id}
         actions={[
-          <EditOutlined key="edit" />,
-          <DeleteOutlined key="delete" onClick={() => removeDream(_id)} />,
+          <EditOutlined key="edit" onClick={handleEdit}/>,
+          <DeleteOutlined key="delete" onClick={() => removeDream(dream._id)} />,
         ]}
       >
           <Meta
-            title={new Date(date).toLocaleDateString()}
-            description={summary}
+            title={new Date(dream.date).toLocaleDateString()}
+            description={dream.summary}
           />
       </Card>
     </div>

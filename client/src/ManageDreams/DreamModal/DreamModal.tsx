@@ -1,6 +1,7 @@
 import React from "react";
 import { Input, Form, message, DatePicker, Modal } from "antd";
 import type { DatePickerProps } from "antd";
+import dayjs from 'dayjs'
 const { TextArea } = Input;
 
 interface IDreamModal {
@@ -19,8 +20,9 @@ const DreamModal: React.FC<IDreamModal> = ({
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
 
+  const isEdit = !!dream;
   let initialValues = { date: null, summary: null };
-  if (dream) initialValues = { ...dream };
+  if (isEdit) initialValues = { ...dream, date: dayjs(new Date(dream.date))};
 
   const success = () => {
     messageApi.open({
@@ -28,6 +30,8 @@ const DreamModal: React.FC<IDreamModal> = ({
       content: "Successfully added Dream!",
     });
   };
+
+  console.log('initial modal vals', initialValues)
 
   // Manage Date picker
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
@@ -63,7 +67,7 @@ const DreamModal: React.FC<IDreamModal> = ({
     <>
       {contextHolder}
       <Modal
-        title="Create Dream"
+        title={isEdit ? "Edit Dream" : "Create Dream"}
         open={isModalOpen}
         okText="Submit"
         onOk={onSubmit}
